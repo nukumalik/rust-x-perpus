@@ -11,9 +11,9 @@ pub mod CountryModel {
         pagination_sort: Option<PaginationSort>,
         filter: Option<String>,
     ) -> Result<Vec<CountrySchema>, Error> {
-        let mut sql = "SELECT * FROM countries".to_owned();
+        let mut sql = "SELECT * FROM countries ".to_owned();
         if filter.is_some() {
-            sql.push_str(format!(" WHERE {}", filter.unwrap()).as_str());
+            sql.push_str(format!("WHERE {} ", filter.unwrap()).as_str());
         }
         if pagination_sort.is_some() {
             sql.push_str(pagination_sort.unwrap().to_string().as_str());
