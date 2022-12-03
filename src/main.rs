@@ -1,7 +1,4 @@
 use actix_web::{web, App, HttpServer};
-
-use config::app_state::AppState;
-use modules::country::route::country_route;
 use sqlx::SqlitePool;
 
 mod config;
@@ -16,8 +13,11 @@ async fn main() -> std::io::Result<()> {
         .expect("Failed to connect database");
     let server = HttpServer::new(move || {
         App::new()
-            .app_data(web::Data::new(AppState::new(pool.clone())))
-            .configure(country_route)
+            .app_data(web::Data::new(config::app_state::AppState::new(
+                pool.clone(),
+            )))
+            .configure(modules::country::route::country_route)
+            .configure(modules::province::route::province_route)
     });
     println!("Server is running...");
     server.bind("localhost:3000")?.run().await
