@@ -19,6 +19,7 @@ async fn main() -> std::io::Result<()> {
             .configure(modules::country::route::country_route)
             .configure(modules::province::route::province_route)
             .configure(modules::city::route::city_route)
+            .configure(modules::district::route::district_route)
     });
     println!("Server is running...");
     server.bind("localhost:3000")?.run().await
